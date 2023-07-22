@@ -82,6 +82,7 @@ class PostsServiceImpl(
     private val client: HttpClient
 ): PostsService {
 
+    // Overriding the function getPosts() describing how to get data from the api
     override suspend fun getPosts(): List<PostResponse> {
 
         return try {
@@ -105,6 +106,7 @@ class PostsServiceImpl(
         }
     }
 
+    // Overriding the function createPost() describing how to send data to api
     override suspend fun createPost(postRequest: PostRequest): PostResponse? {
 
         return try {
@@ -129,39 +131,51 @@ class PostsServiceImpl(
     }
 }
 ```
+<br>
 
+### 5. Create values in 'MainActivity' file
+```kotlin
+class MainActivity : ComponentActivity() {
 
+    // Create a value for PostsServiceImpl so that we can use the features of PostsService.
+    private val service = PostsService.create()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
 
+            // Create a value using produceState so that we can use the value in coroutine.
+            // Cuz the api related calls should have to be implemented asynchronously, It's essential to use coroutine.
+            val posts = produceState<List<PostResponse>>(
+                initialValue = emptyList(),
+                producer = {
+                    value = service.getPosts()
+                }
+            )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            KtorGuideTheme {
+                LazyColumn {
+                    // Applying the same way to implement with each element from json.
+                    items(posts.value) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            Text(text = it.title, fontSize = 20.sp)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = it.body, fontSize = 14.sp)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+***
+As I remember, using retrofit was extremely so hard cuz it was too complicated.  
+Maybe cuz of that reason, Ktor feels way easier and efficient for me.  
+<br>
+So from now on, I'll use Ktor as possible as I can with every project.  
+And feel so proud to build my own app using api call without any helps.
