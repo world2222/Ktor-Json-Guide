@@ -22,6 +22,12 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
 }
 
+android {
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.0'    // Change to '1.5.0' to set it compatible to serialization version '1.9.0'.
+    }
+}
+
 dependencies {
     // Ktor
     def ktor_version = "2.3.2"
