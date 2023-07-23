@@ -13,16 +13,33 @@ So based on the code that a Youtuber has made, I changed some codes to the newes
 ## Just remember these things then you can use ktor
 ### 1. Use these dependencies
 ```kotlin
-// Ktor
-def ktor_version = "2.3.2"
-implementation "io.ktor:ktor-client-core:$ktor_version"
-implementation "io.ktor:ktor-client-android:$ktor_version"
-implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
-implementation "io.ktor:ktor-client-logging:$ktor_version"
-implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
+// Put these in build.grade APP file.
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
+}
 
-// Serialization
-implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1'
+dependencies {
+    // Ktor
+    def ktor_version = "2.3.2"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+    implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
+    
+    // Serialization
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1'
+}
+```
+<br>
+
+```kotlin
+// Put this in build.gradle PROJECT file.
+id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
 ```
 <br>
 
